@@ -17,8 +17,9 @@ export default function Home() {
       </div>
       <div className="container mx-auto flex gap-2 items-center justify-center">
         <div className="bg-[#18181b] text-[#9ecbff] rounded-md p-3 flex items-center justify-center">
-          <p>
-            <span className="text-[#b392f0]">git clone</span> github.com/zyncc
+          <p className="select-none">
+            <span className="text-[#b392f0]">git clone</span>{" "}
+            github.com/zyncc/t3-stack
           </p>
         </div>
         <CopyButton />
