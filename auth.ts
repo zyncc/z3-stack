@@ -2,7 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@/lib/prisma";
 import { nextCookies } from "better-auth/next-js";
-import { admin, oneTap } from "better-auth/plugins";
+import { admin } from "better-auth/plugins";
 import { genUUID } from "./lib/uuid-generator";
 
 export const auth = betterAuth({
@@ -18,8 +18,8 @@ export const auth = betterAuth({
     },
   },
   session: {
-    expiresIn: 60 * 60 * 24 * 7, // 7 days
-    updateAge: 60 * 60, // 1 hour
+    expiresIn: 60 * 60 * 24 * 31, // 31 days
+    updateAge: 60 * 60 * 24, // 1 day
   },
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -30,5 +30,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  plugins: [nextCookies(), oneTap(), admin()],
+  plugins: [nextCookies(), admin()],
 });
