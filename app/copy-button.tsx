@@ -11,7 +11,7 @@ export default function CopyButton() {
       variant={"outline"}
       className="h-full bg-[#18181b] text-white"
       onClick={() => {
-        navigator.clipboard.writeText("git clone github.com/zyncc/z3-stack");
+        navigator.clipboard.writeText("https://github.com/zyncc/z3-stack.git");
         toast({
           title: "Copied to Clipboard!",
         });
