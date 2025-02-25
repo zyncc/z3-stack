@@ -11,7 +11,7 @@ if (fs.existsSync(projectName)) {
   process.exit(1);
 }
 
-console.log(`🚀 Creating a new Next.js app: ${projectName}`);
+console.log(`🚀 Creating a new Z3 App`);
 execSync(`git clone ${repoUrl} ${projectName}`, { stdio: "inherit" });
 
 process.chdir(projectName);
@@ -24,6 +24,7 @@ if (fs.existsSync(".git")) {
 }
 execSync("npm install", { stdio: "inherit" });
 
+console.log("\n✅ Enjoy!");
 console.log("\n✅ Project setup complete! Run:");
 console.log(`   cd ${projectName}`);
-console.log("   npm run dev");
+console.log("   bun dev");
