@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-import degit from "degit";
-import fs from "fs";
 import { execSync } from "child_process";
+import fs from "fs";
 
-const repo = "https://github.com/zyncc/z3-stack.git";
+const repoUrl = "https://github.com/zyncc/z3-stack.git";
 const projectName = process.argv[2] || "z3-app";
 
 if (fs.existsSync(projectName)) {
@@ -11,11 +10,11 @@ if (fs.existsSync(projectName)) {
   process.exit(1);
 }
 
-console.log(`🚀 Cloning template: ${repo}`);
-const emitter = degit(repo, { cache: false, force: true });
-await emitter.clone(projectName);
+console.log(`🚀 Creating a new Next.js app: ${projectName}`);
+execSync(`git clone ${repoUrl} ${projectName}`, { stdio: "inherit" });
 
 process.chdir(projectName);
+execSync("rm -rf .git", { stdio: "inherit" });
 execSync("npm install", { stdio: "inherit" });
 
 console.log("\n✅ Project setup complete! Run:");
