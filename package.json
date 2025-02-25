@@ -3,7 +3,7 @@
   "version": "1.0.1",
   "private": false,
   "bin": {
-    "create-my-nextjs-app": "./cli.js"
+    "create-z3-app": "./cli.js"
   },
   "scripts": {
     "dev": "next dev",
