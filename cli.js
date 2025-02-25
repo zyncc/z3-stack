@@ -14,7 +14,13 @@ console.log(`🚀 Creating a new Next.js app: ${projectName}`);
 execSync(`git clone ${repoUrl} ${projectName}`, { stdio: "inherit" });
 
 process.chdir(projectName);
-execSync("rm -rf .git", { stdio: "inherit" });
+if (fs.existsSync(".git")) {
+  if (platform() === "win32") {
+    execSync("rmdir /s /q .git");
+  } else {
+    execSync("rm -rf .git");
+  }
+}
 execSync("npm install", { stdio: "inherit" });
 
 console.log("\n✅ Project setup complete! Run:");
