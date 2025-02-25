@@ -1,6 +1,6 @@
 {
   "name": "z3-stack",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": false,
   "bin": {
     "create-my-nextjs-app": "./cli.js"
