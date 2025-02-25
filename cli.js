@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import degit from "degit";
 import fs from "fs";
 import { execSync } from "child_process";
