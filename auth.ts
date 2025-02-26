@@ -1,17 +1,17 @@
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "@/lib/prisma";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins";
-import { genUUID } from "./lib/uuid-generator";
+import db from "./lib/db";
+// import { genUUID } from "./lib/uuid-generator";
 
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
   advanced: {
-    generateId: () => genUUID(),
-    // generateId: () => false,
+    // generateId: () => genUUID(),
+    generateId: false,
   },
   account: {
     accountLinking: {
@@ -22,8 +22,8 @@ export const auth = betterAuth({
     expiresIn: 60 * 60 * 24 * 31, // 31 days
     updateAge: 60 * 60 * 24, // 1 day
   },
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
+  database: drizzleAdapter(db, {
+    provider: "sqlite",
   }),
   socialProviders: {
     google: {
