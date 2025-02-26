@@ -4,17 +4,14 @@ import fs from "fs";
 import path from "path";
 
 const repoUrl = "zyncc/z3-stack";
-const projectName = process.argv[2] || "z3-app";
 
-if (fs.existsSync(projectName)) {
-  console.error(`❌ Error: Directory "${projectName}" already exists.`);
-  process.exit(1);
-}
+let projectName = process.argv[2] || ".";
+const projectPath = path.resolve(projectName);
 
-console.log(`🚀 Creating a new Z3 App...`);
-execSync(`npx degit ${repoUrl} ${projectName}`, { stdio: "inherit" });
-console.log(`🚀 Running Bun Install`);
-process.chdir(projectName);
+console.log(`🚀 Creating a new Z3 App in ${projectPath}`);
+execSync(`npx degit ${repoUrl} ${projectPath}`, { stdio: "inherit" });
+console.log(`🚀 Running bun install`);
+process.chdir(projectPath);
 execSync("bun install", { stdio: "inherit" });
 
 const packageJsonPath = path.join(process.cwd(), "package.json");
@@ -27,5 +24,5 @@ if (fs.existsSync(packageJsonPath)) {
 }
 
 console.log("\n✅ Project setup complete! Run:");
-console.log(`   cd ${projectName}`);
+if (projectName !== ".") console.log(`   cd ${projectName}`);
 console.log("   bun dev");
