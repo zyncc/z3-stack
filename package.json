@@ -1,6 +1,6 @@
 {
   "name": "create-z3-app",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": false,
   "bin": {
     "create-z3-app": "./cli.js"
