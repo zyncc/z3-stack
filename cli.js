@@ -11,9 +11,6 @@ const projectFolder = path.basename(projectPath);
 
 console.log(`🚀 Creating a new Z3 App in ${projectPath}`);
 execSync(`npx degit ${repoUrl} ${projectPath}`, { stdio: "inherit" });
-console.log(`🚀 Running bun install`);
-process.chdir(projectPath);
-execSync("bun install", { stdio: "inherit" });
 
 const packageJsonPath = path.join(process.cwd(), "package.json");
 if (fs.existsSync(packageJsonPath)) {
@@ -29,8 +26,11 @@ if (fs.existsSync(packageJsonPath)) {
   packageJson.private = true;
 
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-  console.log("✅ Updated package.json");
 }
+
+console.log(`🚀 Running bun install`);
+process.chdir(projectPath);
+execSync("bun install", { stdio: "inherit" });
 
 console.log("\n✅ Project setup complete! Run:");
 if (projectName !== ".") console.log(`   cd ${projectName}`);
