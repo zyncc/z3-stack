@@ -1,6 +1,6 @@
 {
   "name": "create-z3-app",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "private": false,
   "scripts": {
     "dev": "next dev",
