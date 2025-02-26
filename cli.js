@@ -31,6 +31,7 @@ if (fs.existsSync(packageJsonPath)) {
 console.log(`🚀 Running bun install`);
 process.chdir(projectPath);
 execSync("bun install", { stdio: "inherit" });
+execSync("git init", { stdio: "inherit" });
 
 console.log("\n✅ Project setup complete! Run:");
 if (projectName !== ".") console.log(`   cd ${projectName}`);
