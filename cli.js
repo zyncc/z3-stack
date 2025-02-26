@@ -22,6 +22,7 @@ if (fs.existsSync(packageJsonPath)) {
   delete packageJson.type;
   delete packageJson.author;
   delete packageJson.license;
+  delete packageJson.bin;
 
   packageJson.name = projectFolder;
   packageJson.version = "0.1.0";
