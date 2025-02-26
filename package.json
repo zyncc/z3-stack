@@ -1,15 +1,15 @@
 {
   "name": "create-z3-app",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "private": false,
-  "bin": {
-    "create-z3-app": "./cli.js"
-  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "bin": {
+    "create-z3-app": "./cli.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",

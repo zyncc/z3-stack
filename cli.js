@@ -7,6 +7,7 @@ const repoUrl = "zyncc/z3-stack";
 
 let projectName = process.argv[2] || ".";
 const projectPath = path.resolve(projectName);
+const projectFolder = path.basename(projectPath);
 
 console.log(`🚀 Creating a new Z3 App in ${projectPath}`);
 execSync(`npx degit ${repoUrl} ${projectPath}`, { stdio: "inherit" });
@@ -17,10 +18,17 @@ execSync("bun install", { stdio: "inherit" });
 const packageJsonPath = path.join(process.cwd(), "package.json");
 if (fs.existsSync(packageJsonPath)) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-  if (packageJson.bin) {
-    delete packageJson.bin;
-    fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
-  }
+
+  delete packageJson.type;
+  delete packageJson.author;
+  delete packageJson.license;
+
+  packageJson.name = projectFolder;
+  packageJson.version = "0.1.0";
+  packageJson.private = true;
+
+  fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+  console.log("✅ Updated package.json");
 }
 
 console.log("\n✅ Project setup complete! Run:");

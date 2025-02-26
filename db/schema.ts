@@ -1,91 +1,60 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
-import { relations } from "drizzle-orm";
-import { sql } from "drizzle-orm";
 
-export const users = sqliteTable("user", {
+export const user = sqliteTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  emailVerified: integer("emailVerified", { mode: "boolean" }).notNull(),
+  emailVerified: integer("email_verified", { mode: "boolean" }).notNull(),
   image: text("image"),
-  role: text("role").notNull().default("user"),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  role: text("role"),
+  banned: integer("banned", { mode: "boolean" }),
+  banReason: text("ban_reason"),
+  banExpires: integer("ban_expires", { mode: "timestamp" }),
 });
 
-export const sessions = sqliteTable("session", {
+export const session = sqliteTable("session", {
   id: text("id").primaryKey(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
   token: text("token").notNull().unique(),
-  createdAt: integer("createdAt", { mode: "timestamp" })
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
+  ipAddress: text("ip_address"),
+  userAgent: text("user_agent"),
+  userId: text("user_id")
     .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  ipAddress: text("ipAddress"),
-  userAgent: text("userAgent"),
-  userId: text("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
+    .references(() => user.id, { onDelete: "cascade" }),
+  impersonatedBy: text("impersonated_by"),
 });
 
-export const accounts = sqliteTable("account", {
+export const account = sqliteTable("account", {
   id: text("id").primaryKey(),
-  userId: text("userId")
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  userId: text("user_id")
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  accountId: text("accountId").notNull(),
-  providerId: text("providerId").notNull(),
-  accessToken: text("accessToken"),
-  refreshToken: text("refreshToken"),
-  idToken: text("idToken"),
-  accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
-  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
+    .references(() => user.id, { onDelete: "cascade" }),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  idToken: text("id_token"),
+  accessTokenExpiresAt: integer("access_token_expires_at", {
+    mode: "timestamp",
+  }),
+  refreshTokenExpiresAt: integer("refresh_token_expires_at", {
     mode: "timestamp",
   }),
   scope: text("scope"),
   password: text("password"),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
+  createdAt: integer("created_at", { mode: "timestamp" }).notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull(),
 });
 
-export const verifications = sqliteTable("verification", {
+export const verification = sqliteTable("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
-  createdAt: integer("createdAt", { mode: "timestamp" }).default(
-    sql`CURRENT_TIMESTAMP`
-  ),
-  updatedAt: integer("updatedAt", { mode: "timestamp" }).default(
-    sql`CURRENT_TIMESTAMP`
-  ),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }),
+  updatedAt: integer("updated_at", { mode: "timestamp" }),
 });
-
-export const usersRelations = relations(users, ({ many }) => ({
-  sessions: many(sessions),
-  accounts: many(accounts),
-}));
-
-export const sessionsRelations = relations(sessions, ({ one }) => ({
-  user: one(users, {
-    fields: [sessions.userId],
-    references: [users.id],
-  }),
-}));
-
-export const accountsRelations = relations(accounts, ({ one }) => ({
-  user: one(users, {
-    fields: [accounts.userId],
-    references: [users.id],
-  }),
-}));
