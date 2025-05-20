@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { Toaster } from "sonner";
-import "./globals.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { TRPCProvider } from "@/trpc/client";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin", "latin-ext"],

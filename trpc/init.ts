@@ -1,8 +1,21 @@
 import { initTRPC, TRPCError } from "@trpc/server";
-import { Context } from "./context";
+import db from "@/lib/db";
+import { getServerSession } from "@/lib/get-server-session";
+import { cache } from "react";
+
+export const createTRPCContext = cache(async () => {
+  const session = await getServerSession();
+  return {
+    db,
+    session,
+  };
+});
+
+export type Context = Awaited<ReturnType<typeof createTRPCContext>>;
 
 export const t = initTRPC.context<Context>().create();
-const { router } = t;
+export const createTRPCRouter = t.router;
+export const createCallerFactory = t.createCallerFactory;
 
 export const auth = t.middleware(async ({ ctx, next }) => {
   const session = ctx.session;
@@ -30,7 +43,7 @@ export const publicProcedure = t.procedure;
 export const authProcedure = t.procedure.use(auth);
 export const adminProcedure = t.procedure.use(admin);
 
-export const appRouter = router({
+export const appRouter = createTRPCRouter({
   hello: publicProcedure.query(() => {
     return {
       response: "Hello World",
