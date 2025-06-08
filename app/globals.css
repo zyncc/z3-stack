@@ -46,6 +46,16 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
+  --text-h1: 47.78px;
+  --text-h2: 39.81px;
+  --text-h3: 33.18px;
+  --text-h4: 27.65px;
+  --text-h5: 23.04px;
+  --text-h6: 19.2px;
+  --text-p: 16px;
+  --text-small: 13.33px;
+  --text-verysmall: 11.11px;
+
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
   --shadow-sm: var(--shadow-sm);
