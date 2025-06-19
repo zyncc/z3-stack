@@ -1,7 +1,9 @@
-import { Toaster } from "sonner";
-import "./globals.css";
+import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { Toaster } from "sonner";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { TRPCProvider } from "@/trpc/client";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin", "latin-ext"],
@@ -10,7 +12,12 @@ const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-export default async function RootLayout({
+export const metadata: Metadata = {
+  title: "Z3 Stack",
+  description: "Next.js Starter Template by Zync",
+};
+
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -20,13 +27,13 @@ export default async function RootLayout({
       <body className={poppins.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <TRPCProvider>{children}</TRPCProvider>
+          <Toaster richColors position="top-right" />
         </ThemeProvider>
-        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

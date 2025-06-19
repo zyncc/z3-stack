@@ -10,6 +10,6 @@ const conn = globalForDb.conn ?? postgres(process.env.DATABASE_URL!);
 
 if (process.env.NODE_ENV !== "production") globalForDb.conn = conn;
 
-const db = drizzle(conn, { schema, logger: false });
+const db = drizzle(conn, { schema, logger: true });
 
 export default db;

@@ -1,6 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    dynamicIO: true,
+    nodeMiddleware: true,
+  },
   images: {
     remotePatterns: [
       {
@@ -8,14 +12,6 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
-  },
-  webpack: (config, { webpack }) => {
-    config.plugins.push(
-      new webpack.IgnorePlugin({
-        resourceRegExp: /^cloudflare:workers$/,
-      }),
-    );
-    return config;
   },
 };
 
